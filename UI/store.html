@@ -1,9 +1,488 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta charset="UTF-8">
+     <title>Store Manager | Attendant</title>
+     <link rel="stylesheet" type="text/css" href="css/style.css"> 
+        <style type="text/css">
+              body{
+                margin:0;
+                padding:0;
+                background-image: url('store.jpg');
+                background-size: cover;
+                font-family:sans-serif;
+                font-size: 20px;
+              }
+        </style>
 </head>
 <body>
+      <div class="container-fluid">
+        <header>
+                <!-- <div class="title"> -->
+                  <h1><b>Store Manager</b></h1>
+               <!--  </div> -->
+        </header>
+        <nav>
+             <div class="tab">
+                  <button class="tablinks" onmouseover="openStore(event, 'Products')" id="defaultOpen">Products</button>
+                  <button class="tablinks" onmouseover="openStore(event, 'Shopping_Cart')">Shopping Cart</button>
+                  <button class="tablinks" onmouseover="openStore(event, 'Sales')">Sales</button>
+                  <a href="attendant_login.html"> <button class="tablinks">Logout</button>
+                </div>
+                
+                <div id="Products" class="tabcontent">
+                    <h3>Products</h3>
+                    <hr/><div class="box">
+                          <div class="container-1">
+                              <span class="icon"><i class="fa fa-search"></i></span>
+                              <input type="search" id="search" placeholder="Search product...." />
+                          </div><br><br>
+                        </div>
+                        <table class="table-fill">
+                        <thead>    
+                        <tr>
+                        <th class="text-left">No</th>
+                        <th class="text-left">Item</th>
+                        <th class="text-left">Price $</th>
+                        <th class="text-left">Actions</th>
+                        <th class="text-left">Details</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-hover">
+                        <tr>
+                        <td class="text-left">1</td>
+                        <td class="text-left">Television</td>
+                        <td class="text-left">500</td>
+                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button> </td>
+                        <td>
+                            <!-- Trigger/Open The Modal -->
+                            <button id="myBtn">View</button>
 
+                            <!-- The Modal -->
+                            <div id="myModal" class="modal">
+
+                              <!-- Modal content -->
+                              <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p>NO: 1</p>
+                                <p>Item: Television</p>
+                                <p>Price $: 500</p>
+                                <p>Quantity: 50</p>
+                                <p>Models: Samusung, Apple, LG</p>
+                              </div>
+
+                            </div>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td class="text-left">2</td>
+                        <td class="text-left">Washing Machine</td>
+                        <td class="text-left">1,000</td>
+                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button></td>
+                         <td>
+                            <!-- Trigger/Open The Modal -->
+                            <button id="myBtn2">View</button>
+
+                            <!-- The Modal -->
+                            <div id="myModal2" class="modal2">
+
+                              <!-- Modal content -->
+                              <div class="modal2-content">
+                                <span class="close2">&times;</span>
+                                <p>NO: 2</p>
+                                <p>Item: Washing Machine</p>
+                                <p>Price $: 1,000</p>
+                                <p>Quantity: 30</p>
+                                <p>Models: Samusung, Apple, LG</p>
+                              </div>
+
+                            </div>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td class="text-left">3</td>
+                        <td class="text-left">Water Dispenser </td>
+                        <td class="text-left">300</td>
+                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button></td>
+                         <td>
+                            <!-- Trigger/Open The Modal -->
+                            <button id="myBtn3">View</button>
+
+                            <!-- The Modal -->
+                            <div id="myModal3" class="modal3">
+
+                              <!-- Modal content -->
+                              <div class="modal3-content">
+                                <span class="close3">&times;</span>
+                                <p>NO: 3</p>
+                                <p>Item: Water Dispenser</p>
+                                <p>Price $: 1,000</p>
+                                <p>Quantity: 200</p>
+                                <p>Models: Rwenzori, Aqua Sipi, Havana</p>
+                              </div>
+
+                            </div>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td class="text-left">4</td>
+                        <td class="text-left">Refrigerator</td>
+                        <td class="text-left">2,500</td>
+                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button></td>
+                         <td>
+                            <!-- Trigger/Open The Modal -->
+                            <button id="myBtn4">View</button>
+
+                            <!-- The Modal -->
+                            <div id="myModal4" class="modal4">
+
+                              <!-- Modal content -->
+                              <div class="modal4-content">
+                                <span class="close4">&times;</span>
+                                <p>NO: 4</p>
+                                <p>Item: Refrigerator</p>
+                                <p>Price: 2,500</p>
+                                <p>Quantity: 80</p>
+                                <p>Models: Samusung, LG</p>
+                              </div>
+
+                            </div>
+                        </td>
+                        </tr>
+                        
+                        </tbody>
+                        </table>
+                    
+                </div>
+
+                <div id="Shopping_Cart" class="tabcontent">
+                  <h3>Shopping Cart</h3>
+                    <hr/>
+                        <table class="table-fill">
+                        <thead>    
+                        <tr>
+                        <th class="text-left">No</th>
+                        <th class="text-left">Item</th>
+                        <th class="text-left">Price $</th>
+                        <th class="text-left">Quantity</th>
+                        <th class="text-left">Category</th>
+                        <th class="text-left">Total $</th>
+                        </tr>
+                        </thead>
+                        <tbody class="table-hover">
+                        <tr>
+                        <td class="text-left">1</td>
+                        <td class="text-left">Television</td>
+                        <td class="text-left">500</td>
+                        <td class="text-left">2</td>
+                        <td class="text-left">Electronics</td>
+                        <td class="text-left">1000
+                        
+                        </tr>
+                        <tr>
+                        <td class="text-left">2</td>
+                        <td class="text-left">Washing Machine</td>
+                        <td class="text-left">1,000</td>
+                        <td class="text-left">1</td>
+                        <td class="text-left">Electronics</td>
+                        <td class="text-left">1000</td>
+                         
+                        </tr>
+                        <tr>
+                        <td class="text-left">3</td>
+                        <td class="text-left">Water Dispenser </td>
+                        <td class="text-left">300</td>
+                        <td class="text-left">3</td>
+                        <td class="text-left">Electronics</td>
+                        <td class="text-left">900</td>
+                        </tr>
+                        <tr class="text-left"><td></td><td></td><td></td><td></td><td><b>Total $</b>
+                        </td><td><b>2,900</b></td></tr>
+                        </tbody>
+                        </table>
+                </div>
+
+                <div id="Sales" class="tabcontent">
+                  <h3>Sales Records</h3>
+                  <hr/>
+                        <table class="table-fill">
+                        <thead>    
+                        <tr>
+                        <th class="text-left">No</th>
+                        <th class="text-left">Item</th>
+                        <th class="text-left">Price $</th>
+                        <th class="text-left">Date sold</th>
+                         <th class="text-left">Sold by</th>
+                        <th class="text-left">Quantity</th>
+                        <th class="text-left">Total $</th>
+                        
+                        </tr>
+                        </thead>
+                        <tbody class="table-hover">
+                        <tr>
+                        <td class="text-left">1</td>
+                        <td class="text-left">Television</td>
+                        <td class="text-left">500</td>
+                        <td class="text-left">20/12/2016</td>
+                        <td class="text-left">Sylvia Vivi</td>
+                        <td class="text-left">2</td>
+                        <td class="text-left">1,000</td>
+                        </tr>
+                        <tr>
+                        <td class="text-left">2</td>
+                        <td class="text-left">Washing Machine</td>
+                        <td class="text-left">1,000</td>
+                        <td class="text-left">19/08/2016</td>
+                         <td class="text-left">Benon Walter</td>
+                         <td class="text-left">1</td>
+                         <td class="text-left">1,000</td>
+                        </tr>
+                        <tr>
+                        <td class="text-left">3</td>
+                        <td class="text-left">Water Dispenser </td>
+                        <td class="text-left">300</td>
+                        <td class="text-left">20/08/2016</td>
+                        <td class="text-left">Sylvia Vivi</td>
+                        <td class="text-left">5</td>
+                        <td class="text-left">1,500</td>
+                        </tr>
+                        <tr>
+                        <td class="text-left">4</td>
+                        <td class="text-left">Refrigerator</td>
+                        <td class="text-left">2,500</td>
+                        <td class="text-left">04/12/2016</td>
+                        <td class="text-left">Cathy Ajambo</td>
+                        <td class="text-left">2</td>
+                        <td class="text-left">5,000</td>
+                        </tr>
+                        <tr class="text-left"><td></td><td></td><td></td><td></td><td></td><td><b>Total $</b>
+                        </td><td><b>8,500</b></td></tr>
+                        </tbody>
+                        </table>
+
+                    <p class="add">
+                            <button class="add" onclick="openForm()">Add new Sales Record</button>
+                            <div class="form-popup" id="myForm">
+                              <form action="" class="form-container">
+                                <label for="item"><b>Item</b></label>
+                                <input type="text" placeholder="Enter Item" name="iteme" required>
+                                <label for="price"><b>Price $</b></label>
+                                <input type="text" placeholder="Enter Price" name="price" required>
+                                <label for="quantity"><b>Category</b></label>
+                                <select name="category">
+                                <option value="electronics">Electronics</option>
+                                <option value="clothes">Clothes</option>
+                                <option value="bags">Bags</option>
+                              </select><br><br>
+                              <label for="quantity"><b>Quantity</b></label>
+                                <select name="qantity">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                              </select><br><br>
+                              <label for="total"><b>Total $</b></label>
+                                <input type="text" placeholder="Enter Total" name="total" required>
+                                <button type="submit" class="btn">Submit</button>
+                                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                            </form>
+                        </div>
+
+                         </p>
+                </div>
+               
+
+                <div class="clearfix"></div>
+
+        </nav>
+          <!-- <div class="row">
+               <div class="aside">
+                  <h2>hehehhhe</h2>
+              </div>
+         </div> -->
+      </div>  
+
+      <script>
+        function validateForm() {
+            var un = document.loginform.u.value;
+            var pw = document.loginform.p.value;
+            var username = "Admin"; 
+            var password = "admin";
+            if ((un == username) && (pw == password)) {
+                return true;
+            }
+            else {
+                alert ("Login was unsuccessful, please check your username and password");
+                return false;
+            }
+          }
+      </script>
+      <script type="text/javascript">
+                function openStore(evt, storeName) {
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tablinks");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(storeName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+      </script>
+      <script type="text/javascript">
+            // Get the modal
+            var modal = document.getElementById('myModal');
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal 
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+      </script>
+      <script type="text/javascript">
+           // Get the modal
+            var modal2 = document.getElementById('myModal2');
+
+            // Get the button that opens the modal
+            var btn2 = document.getElementById("myBtn2");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close2")[0];
+
+            // When the user clicks the button, open the modal 
+            btn2.onclick = function() {
+                modal2.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal2.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal2) {
+                    modal2.style.display = "none";
+                }
+            }
+      </script>
+      <script type="text/javascript">
+           // Get the modal
+            var modal3 = document.getElementById('myModal3');
+
+            // Get the button that opens the modal
+            var btn3 = document.getElementById("myBtn3");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close3")[0];
+
+            // When the user clicks the button, open the modal 
+            btn3.onclick = function() {
+                modal3.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal3.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal3) {
+                    modal3.style.display = "none";
+                }
+            }
+      </script>
+      <script type="text/javascript">
+           // Get the modal
+            var modal4 = document.getElementById('myModal4');
+
+            // Get the button that opens the modal
+            var btn4 = document.getElementById("myBtn4");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close4")[0];
+
+            // When the user clicks the button, open the modal 
+            btn4.onclick = function() {
+                modal4.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal4.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal4) {
+                    modal4.style.display = "none";
+                }
+            }
+      </script>
+      <script type="text/javascript">
+           // Get the modal
+            var modal5 = document.getElementById('myModal5');
+
+            // Get the button that opens the modal
+            var btn5 = document.getElementById("myBtn5");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close5")[0];
+
+            // When the user clicks the button, open the modal 
+            btn5.onclick = function() {
+                modal5.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal5.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal5) {
+                    modal5.style.display = "none";
+                }
+            }
+      </script>
+      <script type="text/javascript">
+          function openForm() {
+                document.getElementById("myForm").style.display = "block";
+            }
+
+            function closeForm() {
+                document.getElementById("myForm").style.display = "none";
+            }
+      </script>
 </body>
 </html>
