@@ -21,3 +21,10 @@ Admin / store owner can do the following
 3. View sale records by all store attendants
 4. View all available products
 5. View an individual product details 
+
+Authentication
+Admin Username - Admin
+Admin Password -admin
+
+Store attendant username - Attendant
+Store attendant password - admin
