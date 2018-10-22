@@ -27,7 +27,7 @@ Technologies used to build the application
 
 Installation
 
-Create a new directory and initialize git in it. Clone this repository by running
+Create a directory, initialize git in it and clone this repository
 
 $ git clone 
 
@@ -49,5 +49,3 @@ $ python run.py
 
 Test your setup using postman REST-client
 
-Link to Store Manager on Heroku
-store-man
