@@ -37,9 +37,10 @@ $ python run.py
 
 You can test your setup using postman REST-client
 
-**Badges**
-1. coveralls
-[![Coverage Status](https://coveralls.io/repos/github/EmmellaBeatrice/store-manager/badge.svg?branch=gh-pages)](https://coveralls.io/github/EmmellaBeatrice/store-manager?branch=gh-pages)
 
+
+[![Build Status](https://travis-ci.org/<EmmellaBeatrice>/<store-manager>.svg?branch=develope)](https://travis-ci.org/EmmellaBeatrice/store-manager)
+[![Coverage Status](https://coveralls.io/repos/github/EmmellaBeatrice/store-manager/badge.svg?branch=develope)](https://coveralls.io/github/EmmellaBeatrice/store-manager?branch=develope)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/82a8edc3ab554359b7def10c11b7c67a)](https://www.codacy.com/app/EmmellaBeatrice/store-manager?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=EmmellaBeatrice/store-manager&amp;utm_campaign=Badge_Grade)
 
 
