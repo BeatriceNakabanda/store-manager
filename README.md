@@ -38,8 +38,8 @@ $ python run.py
 You can test your setup using postman REST-client
 
 **Badges**
-1. coveralls https://s3.amazonaws.com/assets.coveralls.io/badges/coveralls_unknown.svg
-https://coveralls.io/repos/github/EmmellaBeatrice/store-manager/badge.svg?branch=gh-pages(Coverage Status)!:https://coveralls.io/github/EmmellaBeatrice/store-manager?branch=gh-pages
+1. coveralls
+[![Coverage Status](https://coveralls.io/repos/github/EmmellaBeatrice/store-manager/badge.svg?branch=gh-pages)](https://coveralls.io/github/EmmellaBeatrice/store-manager?branch=gh-pages)
 
 
 
