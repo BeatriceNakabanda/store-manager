@@ -37,5 +37,9 @@ $ python run.py
 
 You can test your setup using postman REST-client
 
+**Badges**
+1. coveralls
+https://coveralls.io/repos/github/EmmellaBeatrice/store-manager/badge.svg?branch=gh-pages(Coverage Status)!:https://coveralls.io/github/EmmellaBeatrice/store-manager?branch=gh-pages
+
 
 
