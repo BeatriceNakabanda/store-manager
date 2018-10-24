@@ -47,7 +47,8 @@ def fetch_single_product(product_id):
 
 sale = Blueprint('sale', __name__)
 
-sales = list()
+sales = []
+
 
 
 @sale.route('/api/v1/sales', methods=['POST'])
@@ -63,7 +64,7 @@ def create_sale_record():
             total = int(data['price']) * int(data['quantity'])
             new_record = Sales(record_id, data['product_name'],
                                     data['price'],
-                                    data['product_quantity'],
+                                    data['quantity'],
                                     str(total))
             sales.append(new_record)
             return jsonify({"message": "record created successfully"}), 201

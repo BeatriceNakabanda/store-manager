@@ -15,15 +15,13 @@ class Validate:
 
             if data["quantity"] == "":
                 return "Enter the product quantity", 400
+            
+            if data["quantity"] == "":
+                return "Enter the product quantity", 400
 
             if not re.match(r"^[a-zA-Z0-9 _]*$", data['product_name']):
                 return "productname should contain alphanumerics only", 400
 
-            if not re.match(r"^[0-9_]*$", data['price']):
-                return "price should contain integers only", 400
-
-            if not re.match(r"^[0-9_]*$", data['product_quantity']):
-                return "quantity should contain integers only", 400
             else:
                 return "Valid"
         except KeyError:
