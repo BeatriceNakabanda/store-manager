@@ -19,3 +19,8 @@ Store Manager is a web application that helps store owners manage sales and prod
 
 **Viewing**
 These UI templates can be viewed on [GitHub Pages](https://emmellabeatrice.github.io/store-manager/UI/index.html)
+
+## Badges
+[![Build Status](https://travis-ci.org/<EmmellaBeatrice>/<store-manager>.svg?branch=gh-pages)](https://travis-ci.org/EmmellaBeatrice/store-manager)
+[![Coverage Status](https://coveralls.io/repos/github/EmmellaBeatrice/store-manager/badge.svg?branch=gh-pages )](https://coveralls.io/github/EmmellaBeatrice/store-manager?branch=develope)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/82a8edc3ab554359b7def10c11b7c67a)](https://www.codacy.com/app/EmmellaBeatrice/store-manager?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=EmmellaBeatrice/store-manager&amp;utm_campaign=Badge_Grade)
