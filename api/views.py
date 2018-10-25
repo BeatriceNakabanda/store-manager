@@ -14,6 +14,10 @@ products = []
 @product.route('/')
 def home():
     return ('Welcome to Store Manager'), 200
+<<<<<<< HEAD
+=======
+
+>>>>>>> 918c05c08c39a9c384ccb3129f9b1ac81453db38
 
 @product.route('/api/v1/products', methods=['POST'])
 def create_product():

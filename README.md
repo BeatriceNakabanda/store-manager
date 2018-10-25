@@ -17,7 +17,7 @@ Technologies used to build the application
 ## Installation
 Create a directory, initialize git in it and clone this repository
 
-$ git clone https://github.com/EmmellaBeatrice/store-manager.git
+$ git clonehttps://github.com/EmmellaBeatrice/store-manager.git
 
 Create a virtual environment. For example, with virtualenv, create a virtual environment named venv using
 
