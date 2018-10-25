@@ -27,3 +27,12 @@ class TestProductViews(unittest.TestCase):
     def test_fetch_one_product_id(self):
         response = self.client().get('/api/v1/products/0', content_type='application/json')
         self.assertEqual(response.status_code, 400)
+
+    def test_fetch_all_sales(self):
+        response = self.client().get('/api/v1/sales', content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+
+    def test_fetch_one_sale_id(self):
+        response = self.client().get('/api/v1/sales/0', content_type='application/json')
+        self.assertEqual(response.status_code, 400)

@@ -42,7 +42,7 @@ class TestValidator(unittest.TestCase):
     # Do tests when quanitity is null
     def test_empty_product_quantity(self):
         data = {
-            "product_name": "Nomi",
+            "product_name": "Omo",
             "quantity": "",
             "price": "250"
         }
@@ -64,7 +64,7 @@ class TestValidator(unittest.TestCase):
     # Does product quantity only accepts strings
     def test_product_quantity_value(self):
         data = {
-            "product_name": "maria",
+            "product_name": "Pencil",
             "quantity": "quantity",
             "price": "17000"
         }
