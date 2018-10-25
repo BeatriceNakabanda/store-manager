@@ -11,6 +11,10 @@ user = Blueprint('user', __name__)
 
 products = []
 
+@product.route('/')
+def home():
+    return ('Welcome to Store Manager'), 200
+
 
 @product.route('/api/v1/products', methods=['POST'])
 def create_product():
