@@ -18,13 +18,11 @@
         </style>
 </head>
 <body>
-      <div class="container-fluid">
+    <div class="container-fluid">
         <header>
-                <!-- <div class="title"> -->
-                  <h1><b>Store Manager</b></h1>
-               <!--  </div> -->
+            <h1><b>Store Manager</b></h1>
         </header>
-        <nav>
+        <div class="content"> 
              <div class="tab">
                   <button class="tablinks" onmouseover="openStore(event, 'Products')" id="defaultOpen">Products</button>
                   <button class="tablinks" onmouseover="openStore(event, 'Shopping_Cart')">Shopping Cart</button>
@@ -55,7 +53,7 @@
                         <td class="text-left">1</td>
                         <td class="text-left">Television</td>
                         <td class="text-left">500</td>
-                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button> </td>
+                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button></a> </td>
                         <td>
                             <!-- Trigger/Open The Modal -->
                             <button id="myBtn">View</button>
@@ -80,7 +78,7 @@
                         <td class="text-left">2</td>
                         <td class="text-left">Washing Machine</td>
                         <td class="text-left">1,000</td>
-                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button></td>
+                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button></a></td>
                          <td>
                             <!-- Trigger/Open The Modal -->
                             <button id="myBtn2">View</button>
@@ -105,7 +103,7 @@
                         <td class="text-left">3</td>
                         <td class="text-left">Water Dispenser </td>
                         <td class="text-left">300</td>
-                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button></td>
+                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button></a></td>
                          <td>
                             <!-- Trigger/Open The Modal -->
                             <button id="myBtn3">View</button>
@@ -130,7 +128,7 @@
                         <td class="text-left">4</td>
                         <td class="text-left">Refrigerator</td>
                         <td class="text-left">2,500</td>
-                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button></td>
+                        <td class="text-left"><a href="#Shopping_Cart"><button>Add to shopping Cart</button></a></td>
                          <td>
                             <!-- Trigger/Open The Modal -->
                             <button id="myBtn4">View</button>
@@ -178,7 +176,7 @@
                         <td class="text-left">500</td>
                         <td class="text-left">2</td>
                         <td class="text-left">Electronics</td>
-                        <td class="text-left">1000
+                        <td class="text-left">1000</td>
                         
                         </tr>
                         <tr>
@@ -302,7 +300,7 @@
 
                 <div class="clearfix"></div>
 
-        </nav>
+        </div>
           <!-- <div class="row">
                <div class="aside">
                   <h2>hehehhhe</h2>
@@ -343,23 +341,18 @@
       <script type="text/javascript">
             // Get the modal
             var modal = document.getElementById('myModal');
-
             // Get the button that opens the modal
             var btn = document.getElementById("myBtn");
-
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close")[0];
-
             // When the user clicks the button, open the modal 
             btn.onclick = function() {
                 modal.style.display = "block";
             }
-
             // When the user clicks on <span> (x), close the modal
             span.onclick = function() {
                 modal.style.display = "none";
             }
-
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == modal) {
@@ -370,23 +363,18 @@
       <script type="text/javascript">
            // Get the modal
             var modal2 = document.getElementById('myModal2');
-
             // Get the button that opens the modal
             var btn2 = document.getElementById("myBtn2");
-
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close2")[0];
-
             // When the user clicks the button, open the modal 
             btn2.onclick = function() {
                 modal2.style.display = "block";
             }
-
             // When the user clicks on <span> (x), close the modal
             span.onclick = function() {
                 modal2.style.display = "none";
             }
-
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == modal2) {
@@ -397,23 +385,18 @@
       <script type="text/javascript">
            // Get the modal
             var modal3 = document.getElementById('myModal3');
-
             // Get the button that opens the modal
             var btn3 = document.getElementById("myBtn3");
-
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close3")[0];
-
             // When the user clicks the button, open the modal 
             btn3.onclick = function() {
                 modal3.style.display = "block";
             }
-
             // When the user clicks on <span> (x), close the modal
             span.onclick = function() {
                 modal3.style.display = "none";
             }
-
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == modal3) {
@@ -424,23 +407,18 @@
       <script type="text/javascript">
            // Get the modal
             var modal4 = document.getElementById('myModal4');
-
             // Get the button that opens the modal
             var btn4 = document.getElementById("myBtn4");
-
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close4")[0];
-
             // When the user clicks the button, open the modal 
             btn4.onclick = function() {
                 modal4.style.display = "block";
             }
-
             // When the user clicks on <span> (x), close the modal
             span.onclick = function() {
                 modal4.style.display = "none";
             }
-
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == modal4) {
@@ -451,23 +429,18 @@
       <script type="text/javascript">
            // Get the modal
             var modal5 = document.getElementById('myModal5');
-
             // Get the button that opens the modal
             var btn5 = document.getElementById("myBtn5");
-
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close5")[0];
-
             // When the user clicks the button, open the modal 
             btn5.onclick = function() {
                 modal5.style.display = "block";
             }
-
             // When the user clicks on <span> (x), close the modal
             span.onclick = function() {
                 modal5.style.display = "none";
             }
-
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == modal5) {
@@ -479,7 +452,6 @@
           function openForm() {
                 document.getElementById("myForm").style.display = "block";
             }
-
             function closeForm() {
                 document.getElementById("myForm").style.display = "none";
             }
