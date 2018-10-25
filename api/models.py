@@ -20,12 +20,12 @@ class Product:
 
 class Sales:
     def __init__(self, sale_id, product_name, price, quantity,
-                 total_amount):
+                 total):
         self.sale_id = sale_id
         self.product_name = product_name
         self.price = price
         self.quantity = quantity
-        self.total_amount = total_amount
+        self.total = total
 
     def get_dict(self):
         dict = {
@@ -33,7 +33,7 @@ class Sales:
             "product_name": self.product_name,
             "price": self.price,
             "quantity": self.quantity,
-            "total_amount": self.total_amount,
+            "total": self.total,
         }
         
         return dict
