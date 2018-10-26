@@ -18,13 +18,15 @@ class Validate:
             if data["quantity"] == "":
                 return "Enter the product quantity", 400
 
-            if not re.match(r"^[a-zA-Z0-9 _]*$", data['product_name']):
-                return "productname should contain alphanumerics only", 400
-
             else:
                 return "Valid"
         except KeyError:
             return "Invalid Key Fields"
+
+               
+        except KeyError:
+                return "Invalid fields"
+
 
     def validate_user(self, data):
         # Validates user fields

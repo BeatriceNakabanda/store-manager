@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request, make_response
 from api.models import Product, Sales, Store_Attendant
 from api.validate import Validate
-from datetime import datetime
 from werkzeug.security import generate_password_hash
 
 
@@ -14,10 +13,6 @@ products = []
 @product.route('/')
 def home():
     return ('Welcome to Store Manager'), 200
-<<<<<<< HEAD
-=======
-
->>>>>>> 918c05c08c39a9c384ccb3129f9b1ac81453db38
 
 @product.route('/api/v1/products', methods=['POST'])
 def create_product():
