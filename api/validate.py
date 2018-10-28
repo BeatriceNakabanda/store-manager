@@ -3,6 +3,7 @@ import re
 
 class Validate:
     """This class contains validators for the different entries"""
+    @Validate
     def validate_product(self, data):
         # Validates the product fields
         product_name = data['product_name']
@@ -26,7 +27,7 @@ class Validate:
 
         except KeyError:
             return "Invalid Key Fields"
-
+    @Validate
     def validate_user(self, data):
         # Validates user fields
         user_name = data['user_name']
@@ -45,7 +46,6 @@ class Validate:
 
             if len(data['password']) < 4:
                 return "Password should have more than four characters ", 400
-            else:
-                return "is_valid"
+            
         except KeyError:
             return "Invalid"

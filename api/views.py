@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, make_response
 from api.models import Product, Sales, Store_Attendant
 from api.validate import Validate
-from werkzeug.security import generate_password_hash
+# from werkzeug.security import generate_password_hash
 
 
 product = Blueprint('product', __name__)
@@ -20,13 +20,11 @@ def create_product():
     data = request.get_json()
     validate = Validate()
     valid = validate.validate_product(data)
- 
     item = dict( 
             product_name = data['product_name'],
             price = data['price'],
             quantity = data['quantity']
-        )
-
+            )
     try:
         if valid == "Valid":
             product_id = len(products)

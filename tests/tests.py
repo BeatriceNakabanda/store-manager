@@ -28,8 +28,7 @@ class TestValidator(unittest.TestCase):
         with app.app_context():
             self.assertEqual(self.validate.validate_product(data),
                              ("Enter Product name", 400))
-    
-                            
+                     
     # Does function complain when wrong key value is given
     def test_wrong_key_values(self):
         data = {
@@ -40,7 +39,6 @@ class TestValidator(unittest.TestCase):
         with app.app_context():
             self.assertEqual(self.validate.validate_product(data), ("Invalid Key Fields"))
 
-    
     # # Do tests when quanitity is null
     # def test_empty_product_quantity(self):
     #     data = {
