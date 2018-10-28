@@ -54,7 +54,6 @@ def fetch_single_product(product_id):
     if product_id != 0 and product_id <= len(products):
         product = products[product_id - 1]
         fetched_product.append(product)
-        # fetched_product.append(product.__dict__)
         return jsonify({"Product": fetched_product}), 200
     return jsonify({"message": "Index out of range!"}), 400
 
@@ -105,23 +104,23 @@ def get_single_record(sale_id):
 
 users = []
 
-@user.route('/api/v1/users', methods=['POST'])
-def register_user():
-    """ registers users"""
-    data = request.get_json()
-    validate_user = Validate()
-    is_valid = validate_user.validate_user(data)
-    for attendant in users:
-        if attendant.email == data['email']:
-            return "user already exists!", 400
-    try:
-        if is_valid == "is_valid":
-            employee_id = len(users)
-            employee_id += 1
-            hashed_password = generate_password_hash(data['password'], method='admin')
-            user = Store_Attendant(employee_id, data['employee_name'],data['gender'], data['email'], data['user_name'], hashed_password)
-            users.append(user)
-            return jsonify({"message": "Store attendant successfully registered"}), 201
-        return make_response(is_valid)
-    except KeyError:
-        return "Invalid key fields"
+# @user.route('/api/v1/users', methods=['POST'])
+# def register_user():
+#     """ registers users"""
+#     data = request.get_json()
+#     validate_user = Validate()
+#     is_valid = validate_user.validate_user(data)
+#     for attendant in users:
+#         if attendant.email == data['email']:
+#             return "user already exists!", 400
+#     try:
+#         if is_valid == "is_valid":
+#             employee_id = len(users)
+#             employee_id += 1
+#             hashed_password = generate_password_hash(data['password'], method='admin')
+#             user = Store_Attendant(employee_id, data['employee_name'],data['gender'], data['email'], data['user_name'], hashed_password)
+#             users.append(user)
+#             return jsonify({"message": "Store attendant successfully registered"}), 201
+#         return make_response(is_valid)
+#     except KeyError:
+#         return "Invalid key fields"

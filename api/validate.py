@@ -8,7 +8,6 @@ class Validate:
         product_name = data['product_name']
         price = data['price']
         quantity = data['quantity']
-        # total = data['total']
         try:
             if not product_name or not price or not quantity:
                 return  "Fill in all fields", 400
@@ -22,9 +21,6 @@ class Validate:
             if quantity and not isinstance(quantity, int):
                 return "Quantity has to be an integer", 400
 
-            # if total and not isinstance(total, int):
-            #     return "Total has to be an int", 400
-
             else:
                 return "Valid"
 
@@ -33,18 +29,15 @@ class Validate:
 
     def validate_user(self, data):
         # Validates user fields
+        user_name = data['user_name']
+        email = data['email']
+        password = data['password']
         try:
             if len(data.keys()) == 0:
                 return "No user added", 400
 
-            if data['user_name'] == "":
-                return "Fill in Username", 400
-
-            if data['email'] == "":
-                return "Fill in Emaill Address", 400
-
-            if data['password'] == "":
-                return "Fill in Password", 400
+            if not user_name or not email or not password:
+                return "Fill in all fields", 400
 
             if not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)",
                             data['email']):

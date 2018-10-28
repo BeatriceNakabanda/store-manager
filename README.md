@@ -41,5 +41,6 @@ You can test your setup using postman REST-client
 [![Build Status](https://travis-ci.org/<EmmellaBeatrice>/<store-manager>.svg?branch=develope)](https://travis-ci.org/EmmellaBeatrice/store-manager)
 [![Coverage Status](https://coveralls.io/repos/github/EmmellaBeatrice/store-manager/badge.svg?branch=develope)](https://coveralls.io/github/EmmellaBeatrice/store-manager?branch=develope)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/82a8edc3ab554359b7def10c11b7c67a)](https://www.codacy.com/app/EmmellaBeatrice/store-manager?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=EmmellaBeatrice/store-manager&amp;utm_campaign=Badge_Grade)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
 
 
