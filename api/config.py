@@ -7,7 +7,7 @@ class BaseConfig:
     """ Project environment configurations """
     DEBUG = False
     TESTING = False 
-    
+
 def token_hex(nbytes=None):
     return urandom(nbytes).hex(60)
 
@@ -21,7 +21,6 @@ class TestingConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     pass
-
 env_config = dict(
     development = DevelopmentConfig,
     tesing = TestingConfig,
