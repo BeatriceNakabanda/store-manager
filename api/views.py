@@ -8,7 +8,7 @@ product = Blueprint('product', __name__)
 sale = Blueprint('sale', __name__)
 user = Blueprint('user', __name__)
 
-products = []
+products = [ ]
 
 @product.route('/')
 def home():
@@ -20,22 +20,32 @@ def create_product():
     data = request.get_json()
     validate = Validate()
     valid = validate.validate_product(data)
+ 
+    item = dict( 
+            product_name = data['product_name'],
+            price = data['price'],
+            quantity = data['quantity']
+        )
+
     try:
         if valid == "Valid":
             product_id = len(products)
             product_id += 1
+            product = [item for item in products if item["product_name"] == data['product_name'] ]
             new_product = Product(product_id, data['product_name'],data['price'], data['quantity'])
-            products.append(new_product)
-            return jsonify({"message": "Product created successfully"}), 201
+            if len(product) == 0:
+                products.append(new_product.__dict__)
+                return jsonify({"message": "Product created successfully"} ), 200
+            else:
+                return jsonify({"message": "Product already exits"} ), 400
         return make_response(valid)
     except ValueError:
                 return jsonify({"message": "Invalid"}), 400
-                
-                
+                             
 @product.route('/api/v1/products', methods=['GET'])
 def fetch_products():
     """Fetches all the available products"""
-    Products = [product.serialize() for product in products]
+    Products = [product for product in products]
     return jsonify({"Products": Products}), 200
                 
 @product.route('/api/v1/products/<int:product_id>', methods=['GET'])
@@ -43,15 +53,12 @@ def fetch_single_product(product_id):
     fetched_product = []
     if product_id != 0 and product_id <= len(products):
         product = products[product_id - 1]
-        fetched_product.append(product.serialize())
+        fetched_product.append(product)
+        # fetched_product.append(product.__dict__)
         return jsonify({"Product": fetched_product}), 200
     return jsonify({"message": "Index out of range!"}), 400
 
-sale = Blueprint('sale', __name__)
-
-sales = []
-
-
+sales = [] 
 
 @sale.route('/api/v1/sales', methods=['POST'])
 def create_sale_record():
@@ -59,42 +66,44 @@ def create_sale_record():
     data = request.get_json()
     validate = Validate()
     valid = validate.validate_product(data)
+    item = dict( 
+            product_name = data['product_name'],
+            price = data['price'],
+            quantity = data['quantity'],
+            total = data['total']
+        )
     try:
         if valid == "Valid":
             record_id = len(sales)
             record_id += 1
+            sale =[item for item in sales if item["product_name"] == data['product_name']]
             total = int(data['price']) * int(data['quantity'])
-            new_record = Sales(record_id, data['product_name'],
-                                    data['price'],
-                                    data['quantity'],
-                                    str(total))
-            sales.append(new_record)
-            return jsonify({"message": "record created successfully"}), 201
+            new_record = Sales(record_id, data['product_name'],data['price'], data['quantity'],str(total))
+            if len(sale) == 0:
+                sales.append(new_record.__dict__)
+                return jsonify({"message": "record created successfully"}), 201
+            else:
+                return jsonify({"message": "Product already exits"} ), 400
         return jsonify({"message": "Invalid fields"}), 400
     except ValueError:
         return jsonify({"message": "Invalid"})
 
-
 @sale.route('/api/v1/sales', methods=['GET'])
 def fetch_sale_orders():
     """This endpoint fetches all sale records"""
-    Sales = [record.get_dict() for record in sales]
+    Sales = [sale for sale in sales]
     return jsonify({"All Sales": Sales}), 200
-
 
 @sale.route('/api/v1/sales/<int:sale_id>', methods=['GET'])
 def get_single_record(sale_id):
     single_record = []
     if sale_id != 0 and sale_id <= len(sales):
         record = sales[sale_id - 1]
-        single_record.append(record.get_dict())
+        single_record.append(record)
         return jsonify({"Record": single_record}), 200
     return jsonify({"message": "Index out of range!"}), 400
 
-user = Blueprint('user', __name__)
-
 users = []
-
 
 @user.route('/api/v1/users', methods=['POST'])
 def register_user():

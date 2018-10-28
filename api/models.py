@@ -10,13 +10,22 @@ class Product:
         self.price = price
         self.quantity = quantity
 
-    def serialize(self):
-        return {
+    # def serialize(self):
+    #     return {
+    #         "product_id": self.product_id,
+    #         "product_name": self.product_name,
+    #         "price": self.price,
+    #         "quantity": self.quantity,
+    #         }
+    def get_dict(self):
+        dict = {
             "product_id": self.product_id,
             "product_name": self.product_name,
             "price": self.price,
-            "quantity": self.quantity,
-            }
+            "quantity": self.quantity
+        }
+        
+        return dict
 
 class Sales:
     def __init__(self, sale_id, product_name, price, quantity,

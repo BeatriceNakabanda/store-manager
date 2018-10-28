@@ -5,28 +5,31 @@ class Validate:
     """This class contains validators for the different entries"""
     def validate_product(self, data):
         # Validates the product fields
+        product_name = data['product_name']
+        price = data['price']
+        quantity = data['quantity']
+        # total = data['total']
         try:
-            if data['product_name'] == "":
-                return "Enter Product name", 400
+            if not product_name or not price or not quantity:
+                return  "Fill in all fields", 400
 
-            if data['price'] == "":
-                return "Enter the price of the product", 400
-
-            if data["quantity"] == "":
-                return "Enter the product quantity", 400
+            if product_name and not isinstance(product_name, str):
+                return "Product name has to be a string", 400
             
-            if data["quantity"] == "":
-                return "Enter the product quantity", 400
+            if price and not isinstance(price, int):
+                return "Price has to be an integer", 400
+
+            if quantity and not isinstance(quantity, int):
+                return "Quantity has to be an integer", 400
+
+            # if total and not isinstance(total, int):
+            #     return "Total has to be an int", 400
 
             else:
                 return "Valid"
+
         except KeyError:
             return "Invalid Key Fields"
-
-               
-        except KeyError:
-                return "Invalid fields"
-
 
     def validate_user(self, data):
         # Validates user fields
