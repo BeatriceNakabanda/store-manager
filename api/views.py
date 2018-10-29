@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, make_response
 from api.models import Product, Sales, Store_Attendant
 from api.validate import Validate
-# from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash
 
 
 product = Blueprint('product', __name__)
@@ -33,13 +33,39 @@ def create_product():
             new_product = Product(product_id, data['product_name'],data['price'], data['quantity'])
             if len(product) == 0:
                 products.append(new_product.__dict__)
-                return jsonify({"message": "Product created successfully"} ), 200
+                return jsonify({"message": "Product created successfully",
+                "data" : {
+                    "product_name":"",
+                    "Price":"",
+                    "quantity":""
+                         }
+            } ), 201
             else:
                 return jsonify({"message": "Product already exits"} ), 400
         return make_response(valid)
     except ValueError:
                 return jsonify({"message": "Invalid"}), 400
-                             
+
+@product.route('/api/v1/products/<int:product_id>', methods=['PUT'])
+# @Auth.auth_required
+# def update_single_product(product_id):
+#     req_data = request.get_json()
+#     update = Product.get_dict(product_id)
+#     if not update:
+#         return custom_response({'error': 'Post not found'}, 404)
+#     return custom_response
+#         data = blogpost_schema.dump(post).data
+#   if data.get('owner_id') != g.user.get('id'):
+#     return custom_response({'error': 'permission denied'}, 400)
+  
+#   data, error = blogpost_schema.load(req_data, partial=True)
+#   if error:
+#     return custom_response(error, 400)
+#   post.update(data)
+  
+#   data = blogpost_schema.dump(post).data
+#   return custom_response(data, 200)
+
 @product.route('/api/v1/products', methods=['GET'])
 def fetch_products():
     """Fetches all the available products"""
@@ -78,7 +104,14 @@ def create_sale_record():
             new_record = Sales(record_id, data['product_name'],data['price'], data['quantity'],str(total))
             if len(sale) == 0:
                 sales.append(new_record.__dict__)
-                return jsonify({"message": "record created successfully"}), 201
+                return jsonify({"message": "record created successfully", 
+                "sales" : {
+                    "product_name":"",
+                    "Price":"",
+                    "quantity":"",
+                    "total": ""
+                         }
+                }), 201
             else:
                 return jsonify({"message": "Product already exits"} ), 400
         return jsonify({"message": "Invalid fields"}), 400
