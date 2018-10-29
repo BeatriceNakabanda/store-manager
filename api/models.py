@@ -39,23 +39,16 @@ class Sales:
         
         return dict
 
-class StoreEmployee(object):
-    def __init__(self, employee_id, employee_name, gender, email):
-        self.employee_id = employee_id
-        self.employee_name = employee_name
-        self.gender = gender
-        self.email = email
-        
-class Store_Attendant(StoreEmployee):
-    def __init__(self, attendantUser_name, attendant_password):
-        super().__init__()
-        self.store_attendantUser_name = attendantUser_name
-        self.store_attendant_password = attendant_password
+class User(object):
+    def __init__(self, **kwargs):
+        self.user_id = kwargs['user_id']
+        self.user_name = kwargs['user_name']
+        self.email = kwargs['email']
+        self.gender = kwargs['gender']
+        self.username = kwargs['username']
+        self.password = kwargs['password']
+        self.role = kwargs['role']
 
-class Admin(StoreEmployee):
-    def __init__(self, adminUser_name, admin_password):
-        super().__init__()
-        self.adminUser_name = adminUser_name
-        self.admin_password = admin_password
+
 
 

@@ -8,7 +8,7 @@ class Test_Sales(unittest.TestCase):
         self.new_record = Sales(5, "bag", "30000", "5", "150000")
         return self.new_record
 
-    def test_if_class_is_instance(self):
+    def test_class_instance(self):
         # Tests if the object is an instance of the class
         self.assertIsInstance(self.new_record, Sales)
 
@@ -24,7 +24,7 @@ class Test_Sales(unittest.TestCase):
         self.assertNotIsInstance(self.new_record.sale_id, float)
         self.assertIsInstance(self.new_record.sale_id, int)
 
-    def test_sold_product_name(self):
+    def test_product_name(self):
         # Tests the existence of the product name
         self.assertEqual(self.new_record.product_name, "bag")
         self.assertNotEqual(self.new_record.product_name, "skirt")
@@ -42,13 +42,13 @@ class Test_Sales(unittest.TestCase):
         self.assertEqual(self.new_record.price, "10000",
                          "Price has now changed to 10000")
 
-    def test_sold_product_price_datatype(self):
+    def test_price_datatype(self):
         # Tests the datatype of the selling price
         self.assertNotIsInstance(self.new_record.price, int)
         self.assertNotIsInstance(self.new_record.price, float)
         self.assertIsInstance(self.new_record.price, str)
 
-    def test_sold_pdt_quantity(self):
+    def test_product_quantity(self):
         # Tests that the product_quantity is equal to the given quantity
         self.assertEqual(self.new_record.quantity, "5")
         self.assertNotEqual(self.new_record.quantity, "10")
@@ -61,13 +61,25 @@ class Test_Sales(unittest.TestCase):
         self.assertNotIsInstance(self.new_record.quantity, list)
         self.assertIsInstance(self.new_record.quantity, str)
 
-    def test_total_amount(self):
+    def test_total(self):
         # Tests that the total amount is the product of price and quantity
         self.assertEqual(self.new_record.total, "150000")
         self.assertNotEqual(self.new_record.total, "65")
 
-    def test_total_amount_type(self):
+    def test_total_type(self):
         # Tests the datatype of the total amount
         self.assertNotIsInstance(self.new_record.total, int)
         self.assertNotIsInstance(self.new_record.total, float)
         self.assertIsInstance(self.new_record.total, str)
+
+    def test_get_dict_function_returns_a_dictionary(self):
+        # Tests that the function returns a dictionary
+            response = {
+                    "sale_id": 1,
+                    "product_name": "Pen",
+                    "price": "600",
+                    "quantity": 2,
+                    "total": "1200"
+               }
+            self.assertEqual(response['sale_id'], 1)
+            self.assertEqual(response['price'], '600')

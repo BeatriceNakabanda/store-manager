@@ -1,7 +1,8 @@
-from flask import Blueprint, jsonify, request, make_response
-from api.models import Product, Sales, Store_Attendant
+from flask import Blueprint, g, jsonify, request, make_response, redirect, url_for
+from api.models import Product, Sales, User
 from api.validate import Validate
-from werkzeug.security import generate_password_hash
+from functools import wraps
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 product = Blueprint('product', __name__)
@@ -46,26 +47,6 @@ def create_product():
     except ValueError:
                 return jsonify({"message": "Invalid"}), 400
 
-@product.route('/api/v1/products/<int:product_id>', methods=['PUT'])
-# @Auth.auth_required
-# def update_single_product(product_id):
-#     req_data = request.get_json()
-#     update = Product.get_dict(product_id)
-#     if not update:
-#         return custom_response({'error': 'Post not found'}, 404)
-#     return custom_response
-#         data = blogpost_schema.dump(post).data
-#   if data.get('owner_id') != g.user.get('id'):
-#     return custom_response({'error': 'permission denied'}, 400)
-  
-#   data, error = blogpost_schema.load(req_data, partial=True)
-#   if error:
-#     return custom_response(error, 400)
-#   post.update(data)
-  
-#   data = blogpost_schema.dump(post).data
-#   return custom_response(data, 200)
-
 @product.route('/api/v1/products', methods=['GET'])
 def fetch_products():
     """Fetches all the available products"""
@@ -80,6 +61,28 @@ def fetch_single_product(product_id):
         fetched_product.append(product)
         return jsonify({"Product": fetched_product}), 200
     return jsonify({"message": "Index out of range!"}), 400
+
+@product.route('/api/v1/products/<int:product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    if product_id == 0 or product_id > len(products):
+        return jsonify({"message": "Index out of range"}), 400
+    for product in products:
+        if product.product_id == product_id:
+            products.remove(product)
+    return jsonify({"message": "product successfully removed"}), 200
+
+@product.route('/api/v1/products/<int:product_id>', methods=['PUT'])
+def update_product(product_id):
+    """Updates a product"""
+    if product_id == 0 or product_id > len(products):
+        return jsonify({"message": "Index is out of range"}), 400
+    data = request.get_json()
+    for product in products:
+        if int(product.product_id) == int(product_id):
+            product.product_name = data['product_name']
+            product.quantity == data['quantity']
+            product.price = data['price']
+            return jsonify({'message': "Product updated successfully"}), 200
 
 sales = [] 
 
@@ -134,24 +137,23 @@ def get_single_record(sale_id):
     return jsonify({"message": "Index out of range!"}), 400
 
 users = []
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if g.user is None:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
-# @user.route('/api/v1/users', methods=['POST'])
-# def register_user():
-#     """ registers users"""
-#     data = request.get_json()
-#     validate_user = Validate()
-#     is_valid = validate_user.validate_user(data)
-#     for attendant in users:
-#         if attendant.email == data['email']:
-#             return "user already exists!", 400
-#     try:
-#         if is_valid == "is_valid":
-#             employee_id = len(users)
-#             employee_id += 1
-#             hashed_password = generate_password_hash(data['password'], method='admin')
-#             user = Store_Attendant(employee_id, data['employee_name'],data['gender'], data['email'], data['user_name'], hashed_password)
-#             users.append(user)
-#             return jsonify({"message": "Store attendant successfully registered"}), 201
-#         return make_response(is_valid)
-#     except KeyError:
-#         return "Invalid key fields"
+@user.route('/auth/signup', methods=['GET', 'POST'])
+@login_required
+def signup():
+    pass
+
+@user.route('/api/v1/auth/login')
+@login_required
+def login_page():
+    pass
+
+
+
