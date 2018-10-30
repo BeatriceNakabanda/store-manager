@@ -4,7 +4,7 @@ from api.models import Product
 
 class TestProduct(unittest.TestCase):
     def setUp(self):
-        self.product = Product(1, "Shirt", 1, 2000)
+        self.product = Product("Shirt", 2000, 1)
 
     def test_product_quantity_type(self):
         self.assertIsInstance(self.product.quantity, int)
@@ -38,13 +38,4 @@ class TestProduct(unittest.TestCase):
         self.product.product_name = "skirt"
         self.assertEqual(self.product.product_name, "skirt", "skirt")
 
-    def tests_return_of_dictionary(self):
-        response = {
-            'product_id': 1,
-            'product_name': 'Doll',
-            'price': '50000',
-            'quantity': '1'
-            }
-        self.assertEqual(response['product_id'], 1)
-        self.assertEqual(response['price'], '50000')
 
