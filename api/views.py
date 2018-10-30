@@ -2,16 +2,13 @@ from flask import Blueprint, g, jsonify, request, make_response, redirect, url_f
 from api.models import Product, Sales, User
 from api.validate import Validate
 from functools import wraps
-# from flask_jwt_extended import(
-#     jwt_required,
-#     create_access_token,
-#     get_jwt_identity
-# )
 
 
 product = Blueprint('product', __name__)
 sale = Blueprint('sale', __name__)
 user = Blueprint('user', __name__)
+user_object = User()
+product_object = Product()
 
 products = [ ]
 
@@ -21,51 +18,37 @@ def home():
 
 @product.route('/api/v1/products', methods=['POST'])
 def create_product():
-    """Creates a new product"""
+    # Creates a new product
     data = request.get_json()
-    validate = Validate()
-    valid = validate.validate_product(data)
-    item = dict( 
-            product_name = data['product_name'],
-            price = data['price'],
-            quantity = data['quantity']
-            )
-    try:
-        if valid == "Valid":
-            product_id = len(products)
-            product_id += 1
-            product = [item for item in products if item["product_name"] == data['product_name'] ]
-            new_product = Product(product_id, data['product_name'],data['price'], data['quantity'])
-            if len(product) == 0:
-                products.append(new_product.__dict__)
-                return jsonify({"message": "Product created successfully",
-                "data" : {
-                    "product_name":"",
-                    "Price":"",
-                    "quantity":""
-                         }
-            } ), 201
-            else:
-                return jsonify({"message": "Product already exits"} ), 400
-        return make_response(valid)
-    except ValueError:
-                return jsonify({"message": "Invalid"}), 400
+    product_name = data.get("product_name")
+    price = data.get("price")
+    quantity = data.get("quantity")
+    response = None
+    if not product_name or not price or not quantity:
+        response = "Fill in all fields"
+
+    if product_name and not isinstance(product_name, str):
+        response = "Product name cannot be an integer"
+
+    if price and not isinstance(price, int):
+        response = "Price cannot be a string"
+
+    if quantity and not isinstance(quantity, int):
+        response = "Quantity cannot be a string"
+    else:
+        response = product_object.create_product(product_name, price, quantity)
+    return jsonify(response)
 
 @product.route('/api/v1/products', methods=['GET'])
 def fetch_products():
-    """Fetches all the available products"""
-    Products = [product for product in products]
-    return jsonify({"Products": Products}), 200
+    response = product_object.fetch_products()
+    return jsonify(response) 
                 
 @product.route('/api/v1/products/<int:product_id>', methods=['GET'])
 def fetch_single_product(product_id):
-    fetched_product = []
-    if product_id != 0 and product_id <= len(products):
-        product = products[product_id - 1]
-        fetched_product.append(product)
-        return jsonify({"Product": fetched_product}), 200
-    return jsonify({"message": "Index out of range!"}), 400
-
+    response = product_object.fetch_single_product(product_id)
+    return jsonify(response)
+    
 @product.route('/api/v1/products/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
     if product_id == 0 or product_id > len(products):
@@ -140,24 +123,20 @@ def get_single_record(sale_id):
         return jsonify({"Record": single_record}), 200
     return jsonify({"message": "Index out of range!"}), 400
 
-# users = []
-# def login_required(f):
-#     @wraps(f)
-#     def decorated_function(*args, **kwargs):
-#         if g.user is None:
-#             return redirect(url_for('login', next=request.url))
-#         return f(*args, **kwargs)
-#     return decorated_function
+@user.route('/auth/signup', methods=['POST'])
+def signup():
+    user_data = request.get_json()
+    username = user_data.get("username")
+    email = user_data.get("email")
+    password = user_data.get("password")
+    # validations here
+    response = user_object.create_user(username, email, password)
+    return jsonify(response)
 
-# @user.route('/auth/signup', methods=['GET', 'POST'])
-# @login_required
-# def signup():
-#     pass
-
-# @user.route('/api/v1/auth/login')
-# @login_required
-# def login_page():
-#     pass
-
-
-
+@user.route('/api/v1/auth/login', methods=['POST'])
+def login():
+    login_data = request.get_json()
+    username = login_data.get("username")
+    password = login_data.get("password")
+    response = user_object.authenticate_user(username, password)
+    return jsonify(response)
