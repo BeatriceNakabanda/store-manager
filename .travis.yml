@@ -1,12 +1,17 @@
 language: python
 python:
   - "3.5.2"
+env:
+  global:
+    -ENV='testing'
+    -CODECOV_TOKEN="0236bee3-92ba-450c-9172-d951a43996ab"
+    -CC_TESTER_REPORTER_ID="9ce4a864410c13b844967cbe03db29260137cf637326a2b52d2027e13238d343"
 install: 
   - "pip install -r requirements.txt"
-  - pip install coveralls
+  - "pip install coveralls"
 script:
-  - flake8 cmdbox
   - pytest
   
 after_success:
-- coveralls
+  - coveralls
+  - codecov
