@@ -1,23 +1,59 @@
+from database.db import Database
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
+db_conn = Database()
+
+
 class Category:
     def __init__(self, category_id, category_name):
         self.category_id = category_id
         self.category_name = category_name
 
 class Product:
-    def __init__(self, product_id, product_name, price = int, quantity = int):
-        self.product_id = product_id
-        self.product_name = product_name
-        self.price = price
-        self.quantity = quantity
+    def __init__(self):
+        self.cursor = db_conn.cursor
+    
+    def create_product(self, product_name, price, quantity):
+        response = None
+        query = """
+        INSERT INTO products(product_name, price, quantity) VALUES ('{}','{}','{}')
+        """.format(product_name, price, quantity)
+        try:
+            self.cursor.execute(query)
+            response = {"message":"Product added"}
+        except Exception as error:
+            response = {"message":"Failed to add product because{}".format(error)}
+        return response
 
-    def get_dict(self):
-        dict = ({
-            "product_id": self.product_id,
-            "product_name": self.product_name,
-            "price": self.price,
-            "quantity": self.quantity
-        })    
-        return dict
+    def fetch_products(self):
+        response = None
+        query ="""
+                SELECT product_name, price, quantity FROM products
+        """
+        self.cursor.execute(query)
+        products = self.cursor.fetchall()
+
+        if products is not None:
+            response = {"message":products}
+        else:
+             response = {"message":"Failed to get products"} 
+        return response  
+
+    def fetch_single_product(self, product_id):
+        response = None
+        query = """
+                SELECT product_name, price, quantity FROM products 
+                WHERE product_id='{}'
+        """.format(product_id)
+        self.cursor.execute(query)
+        product = self.cursor.fetchone()
+
+        if product is not None:
+            response = {"message":product}
+        else: 
+            response = {"message": "Fetch single product failed"}
+        return response
 
 class Sales:
     def __init__(self, sale_id, product_name, price, quantity,
@@ -41,16 +77,32 @@ class Sales:
 
 class User(object):
     def __init__(self, **kwargs):
-        self.user_id = kwargs['user_id']
-        self.user_name = kwargs['user_name']
-        self.email = kwargs['email']
-        self.gender = kwargs['gender']
-        self.username = kwargs['username']
-        self.password = kwargs['password']
-        self.role = kwargs['role']
+        self.cursor = db_conn.cursor
 
+    def create_user(self, username, email, password):
+        response = None
+        password = generate_password_hash(password)
+        query = """
+                INSERT INTO users(username, email, password) VALUES ('{}','{}','{}')
+        """.format(username, email, password)
+        try:
+            self.cursor.execute(query)
+            response = {"message":"User Created"}
+        except Exception as error:
+            response = {"message": "Failed because {}".format(error)}
+        return response
 
-    
+    def authenticate_user(self, username, password):
+        response = None
+        query = """
+                SELECT username, password FROM users WHERE username='{}'
+        """.format(username)
+        self.cursor.execute(query)
+        user = self.cursor.fetchone()
+        password = check_password_hash(user['password'],password)
 
-
-
+        if user is not None and password:
+            response = {"message":"Successfully logged in"}
+        else: 
+            response = {"message": "Invalid login"}
+        return response
