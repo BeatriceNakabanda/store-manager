@@ -2,7 +2,11 @@ from flask import Blueprint, g, jsonify, request, make_response, redirect, url_f
 from api.models import Product, Sales, User
 from api.validate import Validate
 from functools import wraps
-from werkzeug.security import generate_password_hash, check_password_hash
+# from flask_jwt_extended import(
+#     jwt_required,
+#     create_access_token,
+#     get_jwt_identity
+# )
 
 
 product = Blueprint('product', __name__)
@@ -136,24 +140,24 @@ def get_single_record(sale_id):
         return jsonify({"Record": single_record}), 200
     return jsonify({"message": "Index out of range!"}), 400
 
-users = []
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if g.user is None:
-            return redirect(url_for('login', next=request.url))
-        return f(*args, **kwargs)
-    return decorated_function
+# users = []
+# def login_required(f):
+#     @wraps(f)
+#     def decorated_function(*args, **kwargs):
+#         if g.user is None:
+#             return redirect(url_for('login', next=request.url))
+#         return f(*args, **kwargs)
+#     return decorated_function
 
-@user.route('/auth/signup', methods=['GET', 'POST'])
-@login_required
-def signup():
-    pass
+# @user.route('/auth/signup', methods=['GET', 'POST'])
+# @login_required
+# def signup():
+#     pass
 
-@user.route('/api/v1/auth/login')
-@login_required
-def login_page():
-    pass
+# @user.route('/api/v1/auth/login')
+# @login_required
+# def login_page():
+#     pass
 
 
 

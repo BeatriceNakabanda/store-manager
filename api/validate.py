@@ -1,4 +1,5 @@
 from flask import Flask
+from api.models import User
 import re
 
 
@@ -27,25 +28,13 @@ class Validate:
 
         except KeyError:
             return "Invalid Key Fields"
-    
-    def validate_user(self, data):
-        # Validates user fields
-        user_name = data['user_name']
-        email = data['email']
-        password = data['password']
-        try:
-            if len(data.keys()) == 0:
-                return "No user added", 400
 
-            if not user_name or not email or not password:
-                return "Fill in all fields", 400
+            # # if not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)",
+            #                 data['email']):
+            #     return "Invalid email format", 400
 
-            if not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)",
-                            data['email']):
-                return "Invalid email format", 400
-
-            if len(data['password']) < 4:
-                return "Password should have more than four characters ", 400
+            # if len(data['password']) < 4:
+            #     return "Password should have more than four characters ", 400
             
         except KeyError:
             return "Invalid"
