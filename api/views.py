@@ -1,7 +1,7 @@
 from flask import Blueprint, g, jsonify, request, make_response, redirect, url_for
 from api.models import Product, Sales, User
-from api.validate import Validate
 from functools import wraps
+import re
 
 
 product = Blueprint('product', __name__)
@@ -35,6 +35,9 @@ def create_product():
 
     if quantity and not isinstance(quantity, int):
         response = "Quantity cannot be a string"
+
+    if response:
+        return jsonify(response)
     else:
         response = product_object.create_product(product_name, price, quantity)
     return jsonify(response)
@@ -51,25 +54,17 @@ def fetch_single_product(product_id):
     
 @product.route('/api/v1/products/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
-    if product_id == 0 or product_id > len(products):
-        return jsonify({"message": "Index out of range"}), 400
-    for product in products:
-        if product.product_id == product_id:
-            products.remove(product)
-    return jsonify({"message": "product successfully removed"}), 200
+    response = product_object.delete_product(product_id)
+    return jsonify(response)
 
 @product.route('/api/v1/products/<int:product_id>', methods=['PUT'])
 def update_product(product_id):
     """Updates a product"""
-    if product_id == 0 or product_id > len(products):
-        return jsonify({"message": "Index is out of range"}), 400
-    data = request.get_json()
-    for product in products:
-        if int(product.product_id) == int(product_id):
-            product.product_name = data['product_name']
-            product.quantity == data['quantity']
-            product.price = data['price']
-            return jsonify({'message': "Product updated successfully"}), 200
+    product_data = request.get_json()
+    price = product_data.get("price")
+    quantity = product_data.get("quantity")
+    response = product_object.update_product(product_id, price, quantity)
+    return jsonify(response)
 
 sales = [] 
 
@@ -129,8 +124,20 @@ def signup():
     username = user_data.get("username")
     email = user_data.get("email")
     password = user_data.get("password")
-    # validations here
-    response = user_object.create_user(username, email, password)
+    response = None
+    if not username or not email or not password:
+        response = "Fill in all fields"
+
+    if username and not isinstance(username, str):
+        response = "Username cannot be an integer"
+    
+    if email and not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)", email):
+        response = "Invalid email format"
+
+    if response:
+        return jsonify(response)
+    else:
+        response = user_object.create_user(username, email, password)
     return jsonify(response)
 
 @user.route('/api/v1/auth/login', methods=['POST'])
@@ -138,5 +145,9 @@ def login():
     login_data = request.get_json()
     username = login_data.get("username")
     password = login_data.get("password")
-    response = user_object.authenticate_user(username, password)
+    response = None
+    if not username or not password:
+        response = "Fill in all fields"
+    else:
+        response = user_object.authenticate_user(username, password)
     return jsonify(response)

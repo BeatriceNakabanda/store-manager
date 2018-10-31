@@ -16,14 +16,24 @@ class Product:
     
     def create_product(self, product_name, price, quantity):
         response = None
+        item_exists = """
+                SELECT product_name FROM products WHERE product_name = '{}'
+        """.format(product_name)
+        self.cursor.execute(item_exists)
+        row = self.cursor.fetchone()
+
         query = """
         INSERT INTO products(product_name, price, quantity) VALUES ('{}','{}','{}')
         """.format(product_name, price, quantity)
-        try:
-            self.cursor.execute(query)
-            response = {"message":"Product added"}
-        except Exception as error:
-            response = {"message":"Failed to add product because{}".format(error)}
+        if row is not None:
+            response = {"message":"Product already exists"}
+
+        else:
+            try:
+                self.cursor.execute(query)
+                response = {"message":"Product added"}
+            except Exception as error:
+                response = {"message":"Failed to add product because{}".format(error)}
         return response
 
     def fetch_products(self):
@@ -53,6 +63,53 @@ class Product:
             response = {"message":product}
         else: 
             response = {"message": "Fetch single product failed"}
+        return response
+
+    def update_product(self, product_id, price, quantity):
+        response = None
+        query = """
+                UPDATE products 
+                SET price = '{}', quantity = '{}' 
+                WHERE product_id = '{}'  
+        """.format(price, quantity, product_id)
+
+        item_exists = """
+                SELECT product_id FROM products WHERE product_id = '{}'
+        """.format(product_id)
+        
+        self.cursor.execute(item_exists)
+        item = self.cursor.fetchone()
+
+        if item is not None:
+            self.cursor.execute(query)
+            response = {"message":"Product updated successfully"}
+        
+        if response:
+            return response
+        else:
+            response = {"message":"Failed to update product"}
+        return response
+
+    def delete_product(self, product_id):
+        response = None
+        query = """
+            DELETE FROM products WHERE product_id = '{}'
+        """.format(product_id)
+        item_exists = """
+                SELECT product_id FROM products WHERE product_id = '{}'
+        """.format(product_id)
+        
+        self.cursor.execute(item_exists)
+        item = self.cursor.fetchone()
+
+        if item is not None:
+            self.cursor.execute(query)
+            response = {"message":"Product deleted"}
+        
+        if response:
+            return response
+        else:
+            response = {"message":"Failed to delete product"}
         return response
 
 class Sales:

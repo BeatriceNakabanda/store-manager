@@ -1,60 +1,68 @@
-import unittest
-from api.models import User
+from .base import BaseTest
+import json
 
 
-class TestProduct(unittest.TestCase):
-    def setUp(self):
-        kwargs = {
-            "user_id": 1,
-            "user_name": "Ella Beatirce",
-            "email": "beat@gmail.com",
-            "gender": "female",
-            "username": "Ella",
-            "password": "admin",
-            "role": "admin"
-        }
-        self.user = User(**kwargs)
+class TestUser(BaseTest):
+    sample_user = dict(
+        username = "Juliet",
+        email = "may@gmail.com",
+        password = "123martha"
+    )
+    invalid_username = dict(
+        username = 182653,
+        email = "que@gmail.com",
+        password = "123martha"
+    )
+    empty_inputs = dict(
+        username = "",
+        email = "",
+        password = ""
+    )
+    invalid_email_format = dict(
+        username = "Bright",
+        email = "bright.com",
+        password = "bright"
+    )
+    def test_create_user(self):
+        with self.app.app_context():
 
-    def test_user_id(self):
-        # Tests that the employee_id is equal to the given id
-        self.assertEqual(self.user.user_id, 1, "User_id must be 1")
-        self.user.user_id = 2
-        self.assertEqual(self.user.user_id, 2, "User_id is now 2")
+            request = self.test_client.post(
+                "/auth/signup",
+                data = json.dumps(self.sample_user),
+                content_type = "application/json"
+            )
+            print(request.data)
+        self.assertIn(b'User Created', request.data)
 
-    def test_user_id_type(self):
-        # Tests the datatype of the employee id
-        self.assertNotIsInstance(self.user.user_id, str)
-        self.assertIsInstance(self.user.user_id, int)
+    def test_invalid_username(self):
+        with self.app.app_context():
 
-    def test_user_email(self):
-        # Tests that the email is equal to the given email
-        self.assertEqual(self.user.email, "beat@gmail.com")
+            request = self.test_client.post(
+                "/auth/signup",
+                data = json.dumps(self.invalid_username),
+                content_type = "application/json"
+            )
+            print(request.data)
+        self.assertIn(b'Username cannot be', request.data)
 
-    def test_email_type(self):
-        # Tests the datatype of the email
-        self.assertIsInstance(self.user.email, str)
-        self.assertNotIsInstance(self.user.email, int)
+    def test_empty_user_inputs(self):
+        with self.app.app_context():
 
-    def test_gender_attribute(self):
-        # Tests that the gender is equal to the given gender
-        self.assertEqual(self.user.gender, "female")
+            request = self.test_client.post(
+                "/auth/signup",
+                data = json.dumps(self.empty_inputs),
+                content_type = "application/json"
+            )
+            print(request.data)
+        self.assertIn(b'Fill in all fields', request.data)
 
-    def test_gender_datatype(self):
-        # Tests the gender data type
-        self.assertIsInstance(self.user.gender, str)
-        self.assertNotIsInstance(self.user.gender, float)
-        self.assertNotIsInstance(self.user.gender, int)
+    def test_invalid_email_format(self):
+        with self.app.app_context():
 
-    def test_password(self):
-        # Tests that the password is equal to the given password
-        self.assertEqual(self.user.password, "admin")
-        self.user.password = "nimda"
-        self.assertEqual(self.user.password, "nimda", "password is now nimda")
-
-    def test_role(self):
-        # Tests that the role is equal to the given role
-        self.assertEqual(self.user.role, 'admin')
-
-    def test_class_instance(self):
-        # Tests that the defined object is an instance of the User class
-        self.assertIsInstance(self.user, User)
+            request = self.test_client.post(
+                "/auth/signup",
+                data = json.dumps(self.invalid_email_format),
+                content_type = "application/json"
+            )
+            print(request.data)
+        self.assertIn(b'Invalid email format', request.data)
