@@ -20,3 +20,9 @@ class Database:
                 self.cursor.execute(query)
         except Exception as error:
             print("Connection Failed {}".format(error))
+    
+    def delete_table(self, table_name):
+        query = """
+        DROP TABLE IF EXISTS {}
+        """.format(table_name)
+        return self.cursor.execute(query)

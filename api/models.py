@@ -16,14 +16,24 @@ class Product:
     
     def create_product(self, product_name, price, quantity):
         response = None
+        item_exists = """
+                SELECT product_name FROM products WHERE product_name = '{}'
+        """.format(product_name)
+        self.cursor.execute(item_exists)
+        row = self.cursor.fetchone()
+
         query = """
         INSERT INTO products(product_name, price, quantity) VALUES ('{}','{}','{}')
         """.format(product_name, price, quantity)
-        try:
-            self.cursor.execute(query)
-            response = {"message":"Product added"}
-        except Exception as error:
-            response = {"message":"Failed to add product because{}".format(error)}
+        if row is not None:
+            response = {"message":"Product already exists"}
+
+        else:
+            try:
+                self.cursor.execute(query)
+                response = {"message":"Product added"}
+            except Exception as error:
+                response = {"message":"Failed to add product because{}".format(error)}
         return response
 
     def fetch_products(self):

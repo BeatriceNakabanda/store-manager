@@ -1,41 +1,52 @@
-import unittest
-from api.models import Product
+from .base import BaseTest
+import json
 
 
-class TestProduct(unittest.TestCase):
-    def setUp(self):
-        self.product = Product("Shirt", 2000, 1)
+class TestProduct(BaseTest):
+    sample_product = dict(
+        product_name = "Sodax",
+        price = 200,
+        quantity = 2
+    )
+    invalid_product = dict(
+        product_name = 2018,
+        price = 200,
+        quantity = 2
+    )
+    empty_product = dict(
+        product_name = "",
+        price = "",
+        quantity = None
+    )
+    def test_product_creation(self):
+        with self.app.app_context():
 
-    def test_product_quantity_type(self):
-        self.assertIsInstance(self.product.quantity, int)
-        self.assertNotIsInstance(self.product.quantity, str)
+            request = self.test_client.post(
+                "/api/v1/products",
+                data = json.dumps(self.sample_product),
+                content_type = "application/json"
+            )
+            print(request.data)
+        self.assertIn(b'Product added',request.data)
 
-    def test_product_price(self):
-        self.assertEqual(self.product.price, 1, "price must be 1")
+    def test_invalid_products_name(self):
+        with self.app.app_context():
 
-    def test_price_datatype(self):
-        self.assertIsInstance(self.product.price, int)
-        self.assertNotIsInstance(self.product.price, float)
-        self.assertNotIsInstance(self.product.price, str)
+            request = self.test_client.post(
+                "/api/v1/products",
+                data = json.dumps(self.invalid_product),
+                content_type = "application/json"
+            )
+            print(request.data)
+        self.assertIn(b'Product name cannot be an integer',request.data)
 
-    def test_class_instance(self):
-        self.assertIsInstance(self.product, Product)
+    def test_empty_product_values(self):
+        with self.app.app_context():
 
-    def test_product_id(self):
-        self.assertEqual(self.product.product_id, 1, "product_id must be 1")
-        self.product.product_id = 5
-        self.assertEqual(self.product.product_id, 5, "product_id is now 5")
-    
-    def test_product_id_type(self):
-        self.assertNotIsInstance(self.product.product_id, str)
-        self.assertIsInstance(self.product.product_id, int)
-
-    def test_product_quantity(self):
-        self.assertEqual(self.product.quantity, 2000, "Quantity should be 2000")
-
-    def test_product_name(self):
-        self.assertEqual(self.product.product_name, "Shirt")
-        self.product.product_name = "skirt"
-        self.assertEqual(self.product.product_name, "skirt", "skirt")
-
-
+            request = self.test_client.post(
+                "/api/v1/products",
+                data = json.dumps(self.empty_product),
+                content_type = "application/json"
+            )
+            print(request.data)
+        self.assertIn(b'Fill in all fields',request.data)

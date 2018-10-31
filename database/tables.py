@@ -2,9 +2,9 @@ tables_list =(
     """
     CREATE TABLE IF NOT EXISTS users(
         user_id SERIAL PRIMARY KEY, 
-        username VARCHAR(150),
-        email VARCHAR(150) UNIQUE,
-        password VARCHAR(190),
+        username VARCHAR(150) UNIQUE NOT NULL,
+        email VARCHAR(150) UNIQUE NOT NULL,
+        password VARCHAR(190) NOT NULL,
         admin_status BOOL DEFAULT False,
         registered_at TIMESTAMPTZ DEFAULT NOW()  
     )
