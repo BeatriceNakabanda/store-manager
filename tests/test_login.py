@@ -18,7 +18,7 @@ class TestLogin(BaseTest):
             content_type = "application/json"
         )
         print(request.data)
-        self.assertIn(b'User Created', request.data)
+        self.assertIn(b'Fill in all fields', request.data)
 
     def test_invalid_login(self):
         request = self.test_client.post(
@@ -27,4 +27,4 @@ class TestLogin(BaseTest):
             content_type = "application/json"
         )
         print(request.data)
-        self.assertIn(b'User Created', request.data)
+        self.assertIn(b'Fill in all fields', request.data)

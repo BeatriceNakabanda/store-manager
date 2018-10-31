@@ -54,25 +54,17 @@ def fetch_single_product(product_id):
     
 @product.route('/api/v1/products/<int:product_id>', methods=['DELETE'])
 def delete_product(product_id):
-    if product_id == 0 or product_id > len(products):
-        return jsonify({"message": "Index out of range"}), 400
-    for product in products:
-        if product.product_id == product_id:
-            products.remove(product)
-    return jsonify({"message": "product successfully removed"}), 200
+    response = product_object.delete_product(product_id)
+    return jsonify(response)
 
 @product.route('/api/v1/products/<int:product_id>', methods=['PUT'])
 def update_product(product_id):
     """Updates a product"""
-    if product_id == 0 or product_id > len(products):
-        return jsonify({"message": "Index is out of range"}), 400
-    data = request.get_json()
-    for product in products:
-        if int(product.product_id) == int(product_id):
-            product.product_name = data['product_name']
-            product.quantity == data['quantity']
-            product.price = data['price']
-            return jsonify({'message': "Product updated successfully"}), 200
+    product_data = request.get_json()
+    price = product_data.get("price")
+    quantity = product_data.get("quantity")
+    response = product_object.update_product(product_id, price, quantity)
+    return jsonify(response)
 
 sales = [] 
 

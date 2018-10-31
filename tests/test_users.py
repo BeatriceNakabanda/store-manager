@@ -43,7 +43,7 @@ class TestUser(BaseTest):
                 content_type = "application/json"
             )
             print(request.data)
-        self.assertIn(b'User Created', request.data)
+        self.assertIn(b'Username cannot be', request.data)
 
     def test_empty_user_inputs(self):
         with self.app.app_context():
@@ -54,7 +54,7 @@ class TestUser(BaseTest):
                 content_type = "application/json"
             )
             print(request.data)
-        self.assertIn(b'User Created', request.data)
+        self.assertIn(b'Fill in all fields', request.data)
 
     def test_invalid_email_format(self):
         with self.app.app_context():

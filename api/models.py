@@ -65,6 +65,53 @@ class Product:
             response = {"message": "Fetch single product failed"}
         return response
 
+    def update_product(self, product_id, price, quantity):
+        response = None
+        query = """
+                UPDATE products 
+                SET price = '{}', quantity = '{}' 
+                WHERE product_id = '{}'  
+        """.format(price, quantity, product_id)
+
+        item_exists = """
+                SELECT product_id FROM products WHERE product_id = '{}'
+        """.format(product_id)
+        
+        self.cursor.execute(item_exists)
+        item = self.cursor.fetchone()
+
+        if item is not None:
+            self.cursor.execute(query)
+            response = {"message":"Product updated successfully"}
+        
+        if response:
+            return response
+        else:
+            response = {"message":"Failed to update product"}
+        return response
+
+    def delete_product(self, product_id):
+        response = None
+        query = """
+            DELETE FROM products WHERE product_id = '{}'
+        """.format(product_id)
+        item_exists = """
+                SELECT product_id FROM products WHERE product_id = '{}'
+        """.format(product_id)
+        
+        self.cursor.execute(item_exists)
+        item = self.cursor.fetchone()
+
+        if item is not None:
+            self.cursor.execute(query)
+            response = {"message":"Product deleted"}
+        
+        if response:
+            return response
+        else:
+            response = {"message":"Failed to delete product"}
+        return response
+
 class Sales:
     def __init__(self, sale_id, product_name, price, quantity,
                  total):
