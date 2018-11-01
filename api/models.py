@@ -16,21 +16,23 @@ class Product:
     
     def create_product(self, product_name, price, quantity):
         response = None
-        item_exists = """
+        product_exists = """
                 SELECT product_name FROM products WHERE product_name = '{}'
         """.format(product_name)
-        self.cursor.execute(item_exists)
+        
+        self.cursor.execute(product_exists)
         row = self.cursor.fetchone()
 
-        query = """
-        INSERT INTO products(product_name, price, quantity) VALUES ('{}','{}','{}')
+        product_creation_query = """
+                INSERT INTO products(product_name, price, quantity) 
+                VALUES ('{}','{}','{}')
         """.format(product_name, price, quantity)
         if row is not None:
             response = {"message":"Product already exists"}
 
         else:
             try:
-                self.cursor.execute(query)
+                self.cursor.execute(product_creation_query)
                 response = {"message":"Product added"}
             except Exception as error:
                 response = {"message":"Failed to add product because{}".format(error)}
@@ -38,50 +40,53 @@ class Product:
 
     def fetch_products(self):
         response = None
-        query ="""
+        fetch_products_query ="""
                 SELECT product_name, price, quantity FROM products
         """
-        self.cursor.execute(query)
+        self.cursor.execute(fetch_products_query)
         products = self.cursor.fetchall()
 
         if products is not None:
-            response = {"message":products}
+            response = {"products":products}
         else:
              response = {"message":"Failed to get products"} 
         return response  
 
     def fetch_single_product(self, product_id):
         response = None
-        query = """
+
+        single_product_query = """
                 SELECT product_name, price, quantity FROM products 
                 WHERE product_id='{}'
         """.format(product_id)
-        self.cursor.execute(query)
+
+        self.cursor.execute(single_product_query)
         product = self.cursor.fetchone()
 
         if product is not None:
-            response = {"message":product}
+            response = {"product":product}
         else: 
             response = {"message": "Fetch single product failed"}
         return response
 
     def update_product(self, product_id, price, quantity):
         response = None
-        query = """
+
+        update_product_query = """
                 UPDATE products 
                 SET price = '{}', quantity = '{}' 
                 WHERE product_id = '{}'  
         """.format(price, quantity, product_id)
 
-        item_exists = """
+        product_exists = """
                 SELECT product_id FROM products WHERE product_id = '{}'
         """.format(product_id)
         
-        self.cursor.execute(item_exists)
+        self.cursor.execute(product_exists)
         item = self.cursor.fetchone()
 
         if item is not None:
-            self.cursor.execute(query)
+            self.cursor.execute(update_product_query)
             response = {"message":"Product updated successfully"}
         
         if response:
@@ -92,9 +97,11 @@ class Product:
 
     def delete_product(self, product_id):
         response = None
-        query = """
+
+        delete_product_query = """
             DELETE FROM products WHERE product_id = '{}'
         """.format(product_id)
+
         item_exists = """
                 SELECT product_id FROM products WHERE product_id = '{}'
         """.format(product_id)
@@ -103,7 +110,7 @@ class Product:
         item = self.cursor.fetchone()
 
         if item is not None:
-            self.cursor.execute(query)
+            self.cursor.execute(delete_product_query)
             response = {"message":"Product deleted"}
         
         if response:
@@ -113,37 +120,106 @@ class Product:
         return response
 
 class Sales:
-    def __init__(self, sale_id, product_name, price, quantity,
-                 total):
-        self.sale_id = sale_id
-        self.product_name = product_name
-        self.price = price
-        self.quantity = quantity
-        self.total = total
-
-    def get_dict(self):
-        dict = {
-            "sale_id": self.sale_id,
-            "product_name": self.product_name,
-            "price": self.price,
-            "quantity": self.quantity,
-            "total": self.total,
-        }
+    def __init__(self):
+        self.cursor = db_conn.cursor
         
-        return dict
+    def create_sales(self, product_id, user_id, quantity):
+        response = None
+
+        product_exists = """
+                SELECT price, quantity FROM products WHERE product_id = '{}'
+        """.format(product_id)
+        self.cursor.execute(product_exists)
+        row = self.cursor.fetchone()
+
+        if not row:
+            response = {"message":"Product does not exist"}
+
+        else:
+            try:
+                total = quantity * row.get("price")
+                new_quantity = row.get("quantity") - quantity
+                
+                sale_creation_query = """
+                            INSERT INTO sales(product_id, user_id, quantity, total) 
+                            VALUES ('{}','{}','{}','{}')
+                """.format(product_id, user_id, quantity, total)
+
+                update_product = """
+                    UPDATE products SET quantity = {}
+                    WHERE product_id = {}
+                """.format(new_quantity, product_id)
+
+                self.cursor.execute(sale_creation_query)
+                self.cursor.execute(update_product)
+                response = {"message":"Made sale"}
+            except Exception as error:
+                response = {"message":"Failed to make sale because{}".format(error)}
+        return response
+
+    def fetch_sales(self):
+        response = None
+        fetch_sales_query ="""
+                SELECT product_id, user_id, quantity, total FROM sales
+        """
+        self.cursor.execute(fetch_sales_query)
+        sales = self.cursor.fetchall()
+
+        if sales is not None:
+            response = {"sales":sales}
+        else:
+             response = {"message":"Failed to get sales"} 
+        return response  
+
+    def fetch_single_sale_record(self, sale_id):
+        response = None
+        get_one_sale_query = """
+                SELECT user_id, quantity, total FROM sales 
+                WHERE sale_id='{}'
+        """.format(sale_id)
+        self.cursor.execute(get_one_sale_query)
+        sale = self.cursor.fetchone()
+
+        if sale is not None:
+            response = {"sale":sale}
+        else: 
+            response = {"message": "Fetch single sale record failed"}
+        return response
+
+    def delete_sale(self, sale_id):
+        response = None
+        delete_sale_query = """
+            DELETE FROM sales WHERE sale_id = '{}'
+        """.format(sale_id)
+        sale_exists = """
+                SELECT sale_id FROM products WHERE sale_id = '{}'
+        """.format(sale_id)
+        
+        self.cursor.execute(sale_exists)
+        record = self.cursor.fetchone()
+
+        if record is not None:
+            self.cursor.execute(delete_sale_query)
+            response = {"message":"Sale record deleted"}
+        
+        if response:
+            return response
+        else:
+            response = {"message":"Failed to delete sale record"}
+        return response
 
 class User(object):
-    def __init__(self, **kwargs):
+    def __init__(self):
         self.cursor = db_conn.cursor
 
     def create_user(self, username, email, password):
         response = None
         password = generate_password_hash(password)
-        query = """
-                INSERT INTO users(username, email, password) VALUES ('{}','{}','{}')
+        create_user_query = """
+                 INSERT INTO users(username, email, password) VALUES ('{}','{}','{}')
         """.format(username, email, password)
         try:
-            self.cursor.execute(query)
+            self.cursor.execute(create_user_query)
             response = {"message":"User Created"}
         except Exception as error:
             response = {"message": "Failed because {}".format(error)}
@@ -151,10 +227,10 @@ class User(object):
 
     def authenticate_user(self, username, password):
         response = None
-        query = """
+        get_user_query = """
                 SELECT username, password FROM users WHERE username='{}'
         """.format(username)
-        self.cursor.execute(query)
+        self.cursor.execute(get_user_query)
         user = self.cursor.fetchone()
         password = check_password_hash(user['password'],password)
 

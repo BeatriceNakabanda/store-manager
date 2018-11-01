@@ -25,5 +25,14 @@ tables_list =(
         date_added TIMESTAMPTZ DEFAULT NOW()
     )
     """,
+    """
+    CREATE TABLE IF NOT EXISTS sales(
+        sale_id SERIAL PRIMARY KEY,
+        product_id INT references products(product_id) UNIQUE,
+        user_id INT references users(user_id),
+        quantity INTEGER,
+        total INTEGER
+    )
+    """,
     
 )
