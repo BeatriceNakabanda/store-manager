@@ -72,10 +72,10 @@ class Product:
             self.cursor.execute(update_my_product)
             response = {"message":"Product updated successfully"}
         
-        # if response:
-        #     return response
-        # else:
-        #     response = {"message":"Failed to update product"}
+        if response:
+                return response
+        else:
+                response = {"message":"Failed to update product"}
         # return response
         # response = None
         # update_product_query = update_product(price, quantity, product_id)
