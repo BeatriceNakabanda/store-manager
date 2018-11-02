@@ -71,6 +71,9 @@ class Product:
         if item is not None:
             self.cursor.execute(update_my_product)
             response = {"message":"Product updated successfully"}
+        else:
+            response = {"message":"Product updated successfully"}
+        return response
         
         # if response:
         #     return response
