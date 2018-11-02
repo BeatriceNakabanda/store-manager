@@ -10,5 +10,6 @@ class BaseTest(unittest.TestCase):
         self.db_con = Database()
 
     def tearDown(self):
+        self.db_con.delete_table("sales")
         self.db_con.delete_table("products")
         self.db_con.delete_table("users")

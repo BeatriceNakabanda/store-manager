@@ -9,6 +9,7 @@ sale = Blueprint('sale', __name__)
 user = Blueprint('user', __name__)
 user_object = User()
 product_object = Product()
+sales_object = Sales()
 
 products = [ ]
 
@@ -25,8 +26,8 @@ def create_product():
     quantity = data.get("quantity")
     response = None
     if not product_name or not price or not quantity:
-        response = "Fill in all fields"
-
+        response = "Fill in any empty field"
+ 
     if product_name and not isinstance(product_name, str):
         response = "Product name cannot be an integer"
 
@@ -72,51 +73,26 @@ sales = []
 def create_sale_record():
     """ Creates a new sale record"""
     data = request.get_json()
-    validate = Validate()
-    valid = validate.validate_product(data)
-    item = dict( 
-            product_name = data['product_name'],
-            price = data['price'],
-            quantity = data['quantity'],
-            total = data['total']
-        )
-    try:
-        if valid == "Valid":
-            record_id = len(sales)
-            record_id += 1
-            sale =[item for item in sales if item["product_name"] == data['product_name']]
-            total = int(data['price']) * int(data['quantity'])
-            new_record = Sales(record_id, data['product_name'],data['price'], data['quantity'],str(total))
-            if len(sale) == 0:
-                sales.append(new_record.__dict__)
-                return jsonify({"message": "record created successfully", 
-                "sales" : {
-                    "product_name":"",
-                    "Price":"",
-                    "quantity":"",
-                    "total": ""
-                         }
-                }), 201
-            else:
-                return jsonify({"message": "Product already exits"} ), 400
-        return jsonify({"message": "Invalid fields"}), 400
-    except ValueError:
-        return jsonify({"message": "Invalid"})
+    product_id = data.get("product_id")
+    user_id = data.get("user_id")
+    quantity = data.get("quantity")
+    response = None
+    if not product_id or not user_id or not quantity:
+        response = "Fill any empty field"
 
-@sale.route('/api/v1/sales', methods=['GET'])
-def fetch_sale_orders():
-    """This endpoint fetches all sale records"""
-    Sales = [sale for sale in sales]
-    return jsonify({"All Sales": Sales}), 200
+    if quantity and not isinstance(quantity, int):
+        response = "Quantity cannot be a string"
+
+    if response:
+        return jsonify(response)
+    else:
+        response = sales_object.create_sales(product_id, user_id, quantity)
+    return jsonify(response)
 
 @sale.route('/api/v1/sales/<int:sale_id>', methods=['GET'])
-def get_single_record(sale_id):
-    single_record = []
-    if sale_id != 0 and sale_id <= len(sales):
-        record = sales[sale_id - 1]
-        single_record.append(record)
-        return jsonify({"Record": single_record}), 200
-    return jsonify({"message": "Index out of range!"}), 400
+def fetch_single_sale(sale_id):
+    response = sales_object.fetch_single_sale_record(sale_id)
+    return jsonify(response)
 
 @user.route('/auth/signup', methods=['POST'])
 def signup():
@@ -146,8 +122,16 @@ def login():
     username = login_data.get("username")
     password = login_data.get("password")
     response = None
+
     if not username or not password:
-        response = "Fill in all fields"
+        response = "Fill in any empty fields"
+ 
+    if username and not isinstance(username, str):
+        response = "Check your username"
+
+    if response:
+        return jsonify(response)
+    
     else:
         response = user_object.authenticate_user(username, password)
     return jsonify(response)
