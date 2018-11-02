@@ -1,3 +1,6 @@
+from werkzeug.security import generate_password_hash
+
+# password = generate_password_hash("password123")
 tables_list =(
     """
     CREATE TABLE IF NOT EXISTS users(
@@ -5,7 +8,7 @@ tables_list =(
         username VARCHAR(150) UNIQUE NOT NULL,
         email VARCHAR(150) UNIQUE NOT NULL,
         password VARCHAR(190) NOT NULL,
-        admin_status BOOL DEFAULT False,
+        role  VARCHAR(100),
         registered_at TIMESTAMPTZ DEFAULT NOW()  
     )
     """,
@@ -28,11 +31,15 @@ tables_list =(
     """
     CREATE TABLE IF NOT EXISTS sales(
         sale_id SERIAL PRIMARY KEY,
-        product_id INT references products(product_id) UNIQUE,
+        product_id INT references products(product_id),
         user_id INT references users(user_id),
         quantity INTEGER,
         total INTEGER
     )
     """,
+    # """
+    # INSERT INTO users (username, email,password, role) 
+    # VALUES ('admin', 'admin@gmail.com', '{}', 'admin')
+    # """.format(password)
     
 )

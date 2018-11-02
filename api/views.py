@@ -89,14 +89,9 @@ def create_sale_record():
         response = sales_object.create_sales(product_id, user_id, quantity)
     return jsonify(response)
 
-@sale.route('/api/v1/sales', methods=['GET'])
-def fetch_sale_orders(sale_id):
-    response = sales_object.fetch_sales(sale_id)
-    return jsonify(response)
-
 @sale.route('/api/v1/sales/<int:sale_id>', methods=['GET'])
 def fetch_single_sale(sale_id):
-    response = sales_object.fetch_single_record(sale_id)
+    response = sales_object.fetch_single_sale_record(sale_id)
     return jsonify(response)
 
 @user.route('/auth/signup', methods=['POST'])
@@ -127,8 +122,16 @@ def login():
     username = login_data.get("username")
     password = login_data.get("password")
     response = None
+
     if not username or not password:
-        response = "Fill in all fields"
+        response = "Fill in any empty fields"
+ 
+    if username and not isinstance(username, str):
+        response = "Check your username"
+
+    if response:
+        return jsonify(response)
+    
     else:
         response = user_object.authenticate_user(username, password)
     return jsonify(response)

@@ -62,7 +62,7 @@ class TestProduct(BaseTest):
                 content_type = "application/json"
             )
             print(request.data)
-        self.assertIn(b'Fill in all fields',request.data)
+        self.assertIn(b'Fill in any empty field',request.data)
 
     def test_single_product(self):
         with self.app.app_context():
@@ -72,7 +72,7 @@ class TestProduct(BaseTest):
                 content_type = "application/json"
                 )
         print(request.data)
-        self.assertIn(b'Fetch single product failed',request.data)
+        self.assertIn(b'Product does not exist',request.data)
 
     def test_update_product(self):
         with self.app.app_context():
@@ -82,7 +82,7 @@ class TestProduct(BaseTest):
                 content_type = "application/json"
             )
             print(request.data)
-            self.assertIn(b'Fetch single product failed',request.data)
+            self.assertIn(b'Product does not exist',request.data)
 
     def test_delete_product(self):
         with self.app.app_context():

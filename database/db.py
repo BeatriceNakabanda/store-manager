@@ -4,7 +4,7 @@ from database.tables import tables_list
 
 class Database:
     def __init__(self):
-        self.db = "store_manager"
+        self.db = "store_manager_beatrice"
         self.user = "postgres"
         self.host = "localhost"
         self.password = "admin"
@@ -19,7 +19,7 @@ class Database:
             for query in tables_list:
                 self.cursor.execute(query)
         except Exception as error:
-            print("Connection Failed {}".format(error))
+             print("Connection Failed {}".format(error))
     
     def delete_table(self, table_name):
         query = """
