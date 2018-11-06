@@ -4,7 +4,7 @@ import json
 
 class TestLogin(BaseTest):
     sample_login = dict(
-        username = "Juliet",
+        username = "Juliet Adong",
         password = "123martha"
     )
     invalid_login = dict(

@@ -76,23 +76,7 @@ class Product:
                 return response
         else:
                 response = {"message":"Failed to update product"}
-        # return response
-        # response = None
-        # update_product_query = update_product(price, quantity, product_id)
-        # product_exists = check_item_exits(product_id)
-        
-        # self.cursor.execute(product_exists)
-        # item = self.cursor.fetchone()
-
-        # if item is not None:
-        #     self.cursor.execute(update_product_query)
-        #     response = {"message":"Product updated successfully"}
-        
-        # if response:
-        #     return response
-        # else:
-        #     response = {"message":"Failed to update product"}
-        # return response
+        return response
 
     def delete_product(self, product_id):
         response = None
