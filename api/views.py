@@ -36,6 +36,12 @@ def create_product():
 
     if quantity and not isinstance(quantity, int):
         response = "Quantity cannot be a string"
+    
+    if isinstance(price, int) and price < 1:
+        response = "Price cannot be less than zero"
+
+    if isinstance(quantity, int) and quantity < 1:
+        response = "Quantity cannot be less than zero"
 
     if response:
         return jsonify(response)
@@ -82,6 +88,9 @@ def create_sale_record():
 
     if quantity and not isinstance(quantity, int):
         response = "Quantity cannot be a string"
+    
+    if quantity and isinstance(quantity, int) <=0 or product_id ==0:
+        response = "Quantity cannot be less than zero"
 
     if response:
         return jsonify(response)
@@ -103,9 +112,15 @@ def signup():
     response = None
     if not username or not email or not password:
         response = "Fill in all fields"
+    
+    if username and len(username) < 8 or password and len(password) < 8:
+        response = "Username or password should have more than 8 characters"
 
     if username and not isinstance(username, str):
         response = "Username cannot be an integer"
+
+    if not re.match(r"^[a-zA-Z0-9 _]*$", username):
+        response = "Username should only be alphabetical"
     
     if email and not re.match(r"([\w\.-]+)@([\w\.-]+)(\.[\w\.]+$)", email):
         response = "Invalid email format"
