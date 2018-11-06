@@ -46,7 +46,7 @@ class TestSales(BaseTest):
                 data = json.dumps(self.invalid_sale),
                 content_type = "application/json")
         print(request.data)
-        self.assertIn(b'Quantity cannot be a string',request.data)
+        self.assertIn(b'Quantity cannot be less than zero',request.data)
 
     def test_empty_sale_values(self):
         with self.app.app_context():

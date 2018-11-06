@@ -65,7 +65,7 @@ def delete_product(product_id):
     return jsonify(response)
 
 @product.route('/api/v1/products/<int:product_id>', methods=['PUT'])
-def update_product(product_id):
+def update_products(product_id):
     """Updates a product"""
     product_data = request.get_json()
     price = product_data.get("price")
@@ -142,7 +142,7 @@ def login():
         response = "Fill in any empty fields"
  
     if username and not isinstance(username, str):
-        response = "Check your username"
+        response = "Username cannot be an integer"
 
     if response:
         return jsonify(response)

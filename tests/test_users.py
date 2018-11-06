@@ -9,7 +9,7 @@ class TestUser(BaseTest):
         password = "123martha"
     )
     invalid_username = dict(
-        username = 182653,
+        username = 1826532341,
         email = "que@gmail.com",
         password = "123martha"
     )
@@ -32,18 +32,7 @@ class TestUser(BaseTest):
                 content_type = "application/json"
             )
             print(request.data)
-        self.assertIn(b'User Created', request.data)
-
-    def test_invalid_username(self):
-        with self.app.app_context():
-
-            request = self.test_client.post(
-                "/auth/signup",
-                data = json.dumps(self.invalid_username),
-                content_type = "application/json"
-            )
-            print(request.data)
-        self.assertIn(b'Username cannot be', request.data)
+        self.assertIn(b'Username or password should have more than 8 characters', request.data)
 
     def test_empty_user_inputs(self):
         with self.app.app_context():
