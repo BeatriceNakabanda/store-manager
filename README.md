@@ -11,29 +11,29 @@ Store Manager is a web application that helps store owners manage sales and prod
 ## Prerequisites
 Technologies used to build the application
 
- Python 3.5.2
- Flask
+    Python 3.5.2
+    Flask
 
 ## Installation
 Create a directory, initialize git in it and clone this repository
 
-$ git clone <https://github.com/EmmellaBeatrice/store-manager.git>
+    $ git clone <https://github.com/EmmellaBeatrice/store-manager.git>
 
 Create a virtual environment. For example, with virtualenv, create a virtual environment named venv using
 
-$ Python3 -m venv venv
+    $ Python3 -m venv venv
 
 Activate the virtual environment
 
-$ Source venv/bin/activate
+    $ Source venv/bin/activate
 
 Install dependencies in the requirements.txt file using pip
 
-$ pip install -r requirements.txt
+    $ pip install -r requirements.txt
 
 Start the application by running
 
-$ python run.py
+    $ python run.py
 
 You can test your setup using postman REST-client
 
